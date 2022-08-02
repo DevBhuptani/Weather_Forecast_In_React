@@ -4,7 +4,7 @@ import "./style.css";
 import { Button, Input } from "antd";
 
 const Temp = () => {
-  const [searchValue, setSearchValue] = useState("surat");
+  const [searchValue, setSearchValue] = useState("Ahmedabad");
   const [tempInfo, setTempInfo] = useState({});
 
   const getWeatherInfo = async () => {

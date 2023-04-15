@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import WeatherCard from "./weatherCard";
 import "./style.css";
-import { Button, Input } from "antd";
+import { Button } from "react-bootstrap";
 
 const Temp = () => {
   const [searchValue, setSearchValue] = useState("Ahmedabad");
@@ -45,7 +45,7 @@ const Temp = () => {
     <>
       <div className="wrap">
         <div className="search">
-          <Input
+          <input
             type="search"
             placeholder="Search..."
             autoFocus

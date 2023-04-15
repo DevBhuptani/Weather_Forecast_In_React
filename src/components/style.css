@@ -83,6 +83,7 @@ body {
   align-items: center;
   font-size: 100px;
 }
+
 .extra-temp p {
   font-size: 25px;
   font-weight: 600;
@@ -184,6 +185,5 @@ body {
   display: flex;
   justify-content: center;
   text-align: center;
-  margin-top: -150px;
   margin-bottom: 50px;
 }

@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from "react";
-import WeatherCard from "./weatherCard";
-import "./style.css";
-import { Button } from "react-bootstrap";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import WeatherCard from './weatherCard';
+import './style.css';
+import { Button } from 'react-bootstrap';
 
-const Temp = () => {
-  const [searchValue, setSearchValue] = useState("Ahmedabad");
-  const [tempInfo, setTempInfo] = useState({});
+const WeatherApp = () => {
+  const [searchValue, setSearchValue] = useState('Ahmedabad');
+  const [weatherData, setWeatherData] = useState({});
 
-  const getWeatherInfo = async () => {
+  const fetchWeatherData = async () => {
     try {
-      let url = `https://api.openweathermap.org/data/2.5/weather?q=${searchValue}&units=metric&appid=4f3fe8415e7beeade9da42411b338612`; // Your own API key
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${searchValue}&units=metric&appid=4f3fe8415e7beeade9da42411b338612`;
 
-      let res = await fetch(url);
-      let data = await res.json();
+      const response = await axios.get(url);
+      const data = response.data;
 
       const { temp, humidity, pressure } = data.main;
       const { main: weathermood } = data.weather[0];
@@ -20,7 +21,7 @@ const Temp = () => {
       const { speed } = data.wind;
       const { country, sunset } = data.sys;
 
-      const myNewWeatherInfo = {
+      const newWeatherInfo = {
         temp,
         humidity,
         pressure,
@@ -31,15 +32,20 @@ const Temp = () => {
         sunset,
       };
 
-      setTempInfo(myNewWeatherInfo);
+      setWeatherData(newWeatherInfo);
     } catch (error) {
-      console.log(error);
+      console.log('Error fetching weather data: ', error);
+      setWeatherData({}); 
     }
   };
 
   useEffect(() => {
-    getWeatherInfo();
-  });
+    fetchWeatherData();
+  }, []);
+
+  const handleSearch = () => {
+    fetchWeatherData();
+  };
 
   return (
     <>
@@ -54,20 +60,15 @@ const Temp = () => {
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
           />
-
-          <Button
-            className="searchButton"
-            type="button"
-            onClick={getWeatherInfo}
-          >
+          <Button className="searchButton" type="button" onClick={handleSearch}>
             Search
           </Button>
         </div>
       </div>
 
-      <WeatherCard {...tempInfo} />
+      <WeatherCard {...weatherData} />
     </>
   );
 };
 
-export default Temp;
+export default WeatherApp;
